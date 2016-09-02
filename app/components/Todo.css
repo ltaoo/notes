@@ -1,0 +1,11 @@
+.todo {
+  height: 50%;
+  overflow-y: scroll;
+}
+.todo-head {
+  font-size: 16px;
+  padding-left: 10px;
+  background: #eee;
+  line-height: 40px;
+  border-bottom: 1px solid #ccc;
+}
