@@ -1,7 +1,7 @@
 /* edit column */
 .edit {
   width: 50%;
-  height: 92%;
+  height: 90%;
   border-right: 1px solid #ccc;
   float: left;
   box-sizing: border-box;
@@ -13,5 +13,7 @@
   height: 100%;
   padding: 20px;
   font-size: 16px;
+  border: 0;
+  outline: 0;
 }
 
