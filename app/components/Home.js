@@ -10,14 +10,18 @@ import Edit from './Edit'
 import Compile from './Compile'
 
 // api
-import { readFile } from 'fs'
+import { readFileSync, writeFile } from 'fs'
+// util
+import { getNotes, addNote } from '../utils/fileUtil.js'
 
 
 export default class Home extends Component {
   constructor(props) {
     super(props)
     console.log('Home component is loaded')
+    let notes = getNotes()
     this.state = {
+      notes: notes,
       value: '',
       currentNote: null,
       edit: false,
@@ -34,7 +38,6 @@ export default class Home extends Component {
     })
   }
   createFile() {
-    console.log('create file')
     // 清空，应该还要有当前笔记的state，这里也要清除
     this.setState({
       value: '',
@@ -42,15 +45,49 @@ export default class Home extends Component {
     })
   }
   saveFile() {
-    let strAry = this.state.value.split('\n')
     // 将第一行作为文件名进行保存
-    let name = this.getTitle(strAry[0])
+    let name = this.getTitle(this.state.value)
+    if(!name) {
+      return
+    }
+    addNote(name, this.state.value, (notes)=> {
+      this.setState({
+        notes: notes
+      })
+    })
+
   }
-  getTitle(line) {
-    return line.split('#')[1].trim()
+  getTitle(content) {
+    let strAry = content.split('\n')
+    let name = strAry[0].split('#')[1].trim()
+
+    return this.isExist(name)
   }
-  searchFile(name) {
-    
+  isExist(name) {
+    let i = 1
+    function fileExist(ary, name) {
+      let temp = false
+      ary.forEach(item=> {
+        if(item.title === name) {
+          temp = true
+        }
+      })
+      return temp
+    }
+    let notes = getNotes()
+    let lastName = ''
+    function addNum(name) {
+      if(fileExist(notes, name)) {
+        let newname = originalName+'('+(i+1)+')'
+        i = i+1
+        addNum(newname)
+      }else {
+        lastName = name
+      }
+    }
+    let originalName = name
+    let result = addNum(originalName)
+    return lastName
   }
   showEdit() {
   }
@@ -77,6 +114,7 @@ export default class Home extends Component {
           />
           <div className={styles.aside}>
             <Note 
+              notes={this.state.notes}
               onClick={this.showNote.bind(this)}
             />
             <Todo />

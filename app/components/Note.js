@@ -13,12 +13,6 @@ export default class Note extends Component {
     }
     this.fetchItem.bind(this)
   }
-
-  fetchList() {
-    // 读取db.json ，获取到笔记列表
-    let content = JSON.parse(readFileSync('./data/db.json', 'utf-8'))
-    return content.notes
-  }
   fetchItem(name) {
     // 如果点击同名笔记，直接return，不用再次去读取笔记
     if(this.state.clickNote === name) {
@@ -32,7 +26,7 @@ export default class Note extends Component {
     this.props.onClick(fileContent, name)
   }
   render() {
-    let notes = this.fetchList()
+    let notes = this.props.notes
     let list = []
     let i = 0
     notes.forEach(note=> {

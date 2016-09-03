@@ -17,7 +17,6 @@ export default class Compile extends Component {
   render() {
     //
     let html = this.compileMarkdown(this.props.html)
-    console.log(html)
     return (
       <div 
         className={styles['compile']}
