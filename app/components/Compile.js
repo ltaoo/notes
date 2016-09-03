@@ -16,14 +16,20 @@ export default class Compile extends Component {
   }
 
   render() {
-    //
+    let style
+    if(this.props.edit) {
+      // 如果是编辑状态
+      style = styles['compile-half']
+    }else {
+      style = styles['compile-all']
+    }
     let html = this.compileMarkdown(this.props.html)
     return (
       <div 
-        className={styles['compile'] + ' markdown-body'}
-        
+        className={style}
       >
         <div
+          className={styles['compile-inner'] + ' markdown-body'}
           dangerouslySetInnerHTML = {{__html: html}}
         ></div>
       </div>

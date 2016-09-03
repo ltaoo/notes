@@ -12,7 +12,7 @@ import Compile from './Compile'
 // api
 import { readFileSync, writeFile } from 'fs'
 // file util
-import { getNotes, addNote, updateNote, deleteNote } from '../utils/fileUtil.js'
+import { getNotes, addNote, updateNote, deleteNote, getTodos } from '../utils/fileUtil.js'
 
 
 export default class Home extends Component {
@@ -20,12 +20,17 @@ export default class Home extends Component {
     super(props)
     console.log('Home component is loaded')
     let notes = getNotes()
+    let todos = getTodos()
     this.state = {
       notes: notes,
+      todos: todos,
+      title: '',
       value: '',
       currentNote: null,
-      title: '',
-      edit: false
+      currentTodo: null,
+      edit: true,
+      add: true,
+      review: false
     }
     this.input.bind(this)
     this.showEdit.bind(this)
@@ -46,10 +51,18 @@ export default class Home extends Component {
       edit: false
     })
   }
+  // 进入编辑状态
+  startEdit() {
+    this.setState({
+      edit: true
+    })
+  }
+  // 点击保存按钮的handler
   saveFile() {
     // 将第一行作为文件名进行保存
     // 根据当前状态是新增还是修改
-    if(this.state.edit) {
+    if(this.state.edit && this.state.currentNote) {
+      console.log('对已有的笔记做编辑')
       //如果是编辑状态， 就修改文件，而不是根据文件名新增
       let oldName = this.state.currentNote
       let newName = this.state.title
@@ -58,6 +71,9 @@ export default class Home extends Component {
       if(oldName === newName) {
         // 如果只是更新内容
         updateNote(oldName, this.state.value, (note)=> {
+          this.setState({
+            edit: false
+          })
           console.log('更新笔记成功')
         })
       }else {
@@ -67,7 +83,7 @@ export default class Home extends Component {
         addNote(name, this.state.value, (notes)=> {
           this.setState({
             notes: notes,
-            edit: true,
+            edit: false,
             currentNote: name,
             title: name
           })
@@ -75,6 +91,7 @@ export default class Home extends Component {
         })
       }
     }else {
+      console.log('新增')
       //let name = this.getTitle(this.state.value)
       let name = this.state.title
       if(!name) {
@@ -130,12 +147,24 @@ export default class Home extends Component {
   }
   showEdit() {
   }
+  // 点击笔记
   showNote(value, name) {
     this.setState({
       value: value,
       currentNote: name,
+      currentTodo: name,
       title: name,
-      edit: true
+      edit: false
+    })
+  }
+  showTodo(value, name) {
+    this.setState({
+      value: value,
+      currentNote: name,
+      currentTodo: name,
+      title: name,
+      edit: false,
+      review: true
     })
   }
   render() {
@@ -149,7 +178,10 @@ export default class Home extends Component {
       <div>
         <div className={styles.container}>
           <Menu 
+            editState={this.state.edit}
+            reviewState={this.state.review}
             create={this.createFile.bind(this)}
+            edit={this.startEdit.bind(this)}
             save={this.saveFile.bind(this)}
           />
           <div className={styles.aside}>
@@ -157,7 +189,10 @@ export default class Home extends Component {
               notes={this.state.notes}
               onClick={this.showNote.bind(this)}
             />
-            <Todo />
+            <Todo
+              todos={this.state.todos}
+              onClick={this.showNote.bind(this)}
+            />
           </div>
           <div className={styles['markdown']}>
             <input 
@@ -167,12 +202,13 @@ export default class Home extends Component {
               value = {this.state.title}
               onChange = {this.inputTitle.bind(this)}
             />
-            <Edit 
-              className={styles['markdown-show']}
+            <Edit
+              edit={this.state.edit}
               onChange = {this.input.bind(this)}
               value = {this.state.value}
             />
             <Compile
+              edit={this.state.edit}
               html = {this.state.value}
             />
           </div>

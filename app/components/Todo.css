@@ -1,6 +1,7 @@
 .todo {
   height: 50%;
   overflow-y: scroll;
+  position: relative;
 }
 .todo-head {
   font-size: 16px;
@@ -8,4 +9,33 @@
   background: #eee;
   line-height: 40px;
   border-bottom: 1px solid #ccc;
+}
+.todo-small {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 14px;
+}
+.todo-item {
+  font-size: 14px;
+  padding: 5px 10px;
+  border-bottom: 1px solid #eee;
+  line-height: 30px;
+}
+.todo-btn {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-bottom: -6px;
+}
+.todo-complete {
+  font-size: 14px;
+  padding: 5px 10px;
+  border-bottom: 1px solid #eee;
+  line-height: 30px;
+  text-decoration: line-through;
 }

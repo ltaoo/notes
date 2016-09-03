@@ -4,6 +4,7 @@ import styles from './Note.css'
 
 // api
 import { readFileSync } from 'fs'
+import { getNote } from '../utils/fileUtil'
 
 export default class Note extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class Note extends Component {
     this.setState({
       clickNote: name
     })
-    let fileContent = readFileSync('./data/'+name+'.md', 'utf8')
+    let fileContent = getNote(name)
     // 获取到了内容，通知父组件
     this.props.onClick(fileContent, name)
   }

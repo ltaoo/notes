@@ -5,6 +5,10 @@
   border-right: 1px solid #ccc;
   float: left;
   box-sizing: border-box;
+  display: inline-block;
+}
+.edit-hidden {
+  display: none;
 }
 
 .edit-area {

@@ -1,8 +1,30 @@
 .compile {
-  margin-left: 50%;
+  display: inline-block;
   height: 88%;
   overflow-y: auto;
   padding-left: 10px;
   box-sizing: border-box;
+}
+.compile-half {
+  width: 50%;
+  display: inline-block;
+  height: 88%;
+  overflow-y: auto;
+  padding-top: 10px;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+.compile-all {
+  width: 98%;
+  display: inline-block;
+  height: 88%;
+  overflow-y: auto;
+  padding-top: 10px;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+.compile-inner {
+  width: 100%;
 }
 
