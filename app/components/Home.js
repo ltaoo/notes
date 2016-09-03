@@ -11,8 +11,8 @@ import Compile from './Compile'
 
 // api
 import { readFileSync, writeFile } from 'fs'
-// util
-import { getNotes, addNote } from '../utils/fileUtil.js'
+// file util
+import { getNotes, addNote, updateNote, deleteNote } from '../utils/fileUtil.js'
 
 
 export default class Home extends Component {
@@ -24,8 +24,8 @@ export default class Home extends Component {
       notes: notes,
       value: '',
       currentNote: null,
-      edit: false,
-      new: true
+      title: '',
+      edit: false
     }
     this.input.bind(this)
     this.showEdit.bind(this)
@@ -41,27 +41,61 @@ export default class Home extends Component {
     // 清空，应该还要有当前笔记的state，这里也要清除
     this.setState({
       value: '',
-      currentNote: ''
+      currentNote: '',
+      title: '',
+      edit: false
     })
   }
   saveFile() {
     // 将第一行作为文件名进行保存
-    let name = this.getTitle(this.state.value)
-    if(!name) {
-      return
-    }
-    addNote(name, this.state.value, (notes)=> {
-      this.setState({
-        notes: notes
+    // 根据当前状态是新增还是修改
+    if(this.state.edit) {
+      //如果是编辑状态， 就修改文件，而不是根据文件名新增
+      let oldName = this.state.currentNote
+      let newName = this.state.title
+
+      // 如果两个不一样，就是修改了笔记标题，等于是删除原笔记，新建一篇同样内容的笔记
+      if(oldName === newName) {
+        // 如果只是更新内容
+        updateNote(oldName, this.state.value, (note)=> {
+          console.log('更新笔记成功')
+        })
+      }else {
+        // 删除原来的，再新建笔记
+        deleteNote(oldName)
+        let name = this.isExist(newName)
+        addNote(name, this.state.value, (notes)=> {
+          this.setState({
+            notes: notes,
+            edit: true,
+            currentNote: name,
+            title: name
+          })
+          alert('更新笔记成功')
+        })
+      }
+    }else {
+      //let name = this.getTitle(this.state.value)
+      let name = this.state.title
+      if(!name) {
+        return
+      }
+      name = this.isExist(name)
+      addNote(name, this.state.value, (notes)=> {
+        this.setState({
+          notes: notes,
+          edit: true,
+          currentNote: name,
+          title: name
+        })
+        alert('新建笔记成功')
       })
-    })
+    }
 
   }
   getTitle(content) {
     let strAry = content.split('\n')
-    let name = strAry[0].split('#')[1].trim()
-
-    return this.isExist(name)
+    return name = strAry[0].split('#')[1].trim()
   }
   isExist(name) {
     let i = 1
@@ -89,13 +123,19 @@ export default class Home extends Component {
     let result = addNum(originalName)
     return lastName
   }
+  inputTitle(event) {
+    this.setState({
+      title: event.target.value 
+    })
+  }
   showEdit() {
   }
   showNote(value, name) {
-    console.log('show notes', value)
     this.setState({
       value: value,
-      currentNote: name
+      currentNote: name,
+      title: name,
+      edit: true
     })
   }
   render() {
@@ -120,6 +160,13 @@ export default class Home extends Component {
             <Todo />
           </div>
           <div className={styles['markdown']}>
+            <input 
+              type="text" 
+              className={styles['markdown-title']}
+              placeholder={'请输入标题'}
+              value = {this.state.title}
+              onChange = {this.inputTitle.bind(this)}
+            />
             <Edit 
               className={styles['markdown-show']}
               onChange = {this.input.bind(this)}

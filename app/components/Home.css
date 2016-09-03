@@ -20,3 +20,14 @@
 .markdown-hidden {
   display: none;
 }
+.markdown-title {
+  border: 0;
+  width: 98%;
+  margin-bottom: 10px;
+  padding: 5px;
+  margin: 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  outline: 0;
+}
