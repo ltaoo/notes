@@ -13,6 +13,10 @@ export default class Edit extends Component {
   render() {
     return (
       <div className={styles['edit']}>
+        {/*<input 
+          className={styles['edit-title']} 
+          type="text" 
+        />*/}
         <textarea
           className = {styles['edit-area']}
           value = {this.props.value}

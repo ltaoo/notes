@@ -4,17 +4,19 @@
   width: 100%;
 }
 
-.container h2 {
-  font-size: 5rem;
-}
-
-.container a {
-  font-size: 1.4rem;
-}
-
 .aside {
   height: 100%;
   width: 300px;
 
   float: left;
+}
+.markdown {
+  margin-left: 300px;
+  height: 100%;
+}
+.markdown-show {
+  display: block;
+}
+.markdown-hidden {
+  display: none;
 }

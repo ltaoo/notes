@@ -10,9 +10,14 @@ export default class Compile extends Component {
     super(props)
   }
 
+  compileMarkdown(string) {
+    return marked(string)
+  }
+
   render() {
     //
-    let html = marked(this.props.html)
+    let html = this.compileMarkdown(this.props.html)
+    console.log(html)
     return (
       <div 
         className={styles['compile']}
