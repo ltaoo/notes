@@ -1,8 +1,7 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "ElectronReact",
-  "version": "0.10.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "name": "notes",
+  "version": "1.0.0",
+  "description": "Note application based on Electron-application-boilerplate",
   "main": "main.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --compilers js:babel-register --recursive --require ./test/setup.js test/**/*.spec.js",
@@ -25,16 +24,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chentsulin/electron-react-boilerplate.git"
+    "url": "git+https://github.com/ltaoo/notes.git"
   },
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/chentsulin/electron-react-boilerplate/issues"
+    "name": "ltaoo"
   },
   "keywords": [
     "electron",
@@ -45,7 +38,6 @@
     "webpack",
     "react-hot"
   ],
-  "homepage": "https://github.com/chentsulin/electron-react-boilerplate#readme",
   "devDependencies": {
     "asar": "^0.12.2",
     "babel-core": "^6.14.0",

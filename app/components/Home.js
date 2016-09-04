@@ -48,7 +48,7 @@ export default class Home extends Component {
       value: '',
       currentNote: '',
       title: '',
-      edit: false
+      edit: true
     })
   }
   // 进入编辑状态

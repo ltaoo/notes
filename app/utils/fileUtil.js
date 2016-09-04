@@ -124,13 +124,14 @@ export function getTodos() {
 
 // 完成指定笔记的复习
 export function reviewOver(title, cb) {
-  let now = new Date().toLocaleDateString()
+  let now = new Date()
   let json = getDb()
   json.notes.forEach(note=> {
     if(note.title === title) {
       // 该篇笔记完成复习
       for(let time in note.todo) {
-        if(time <= now) {
+        if(new Date(time) <= now) {
+          console.log(time, now)
           note.todo[time] = true
         }
       }
