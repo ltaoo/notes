@@ -7,11 +7,15 @@ export const decrement_note = 'decrement_note'
 export const choose_note = 'choose_note'
 // 输入笔记标题
 export const input_title = 'input_title'
+// 输入笔记内容
+export const input_content = 'input_content'
 // 保存笔记
 export const save_note = 'save_note'
+// 删除笔记
+export const delete_note = 'delete_note'
 
 
-export function increment(title, content) {
+export function increment(title) {
   const now = new Date().getTime()
   const dayAry = [1, 3, 7, 15, 30]
   const ary = []
@@ -25,7 +29,7 @@ export function increment(title, content) {
   return {
     type: increment_note,
     title,
-    content,
+    content: '',
     createTime: new Date().toLocaleString(),
     todo: todo,
     id: new Date().getTime()
@@ -55,12 +59,26 @@ export function inputTitle(id, title) {
   }
 }
 
+export function inputContent(id, content) {
+  return {
+    type: input_content,
+    id,
+    content
+  }
+}
+
 // 保存，即将 current 的内容复制到 notes 中。
 // 这样，可以比对笔记名是否重复。
 export function saveNote() {
   // 在保存笔记前对笔记名做判断？
-  
+
   return {
     type: save_note
+  }
+}
+
+export function deleteNote() {
+  return {
+    type: delete_note
   }
 }

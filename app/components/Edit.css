@@ -2,22 +2,47 @@
 .edit {
   width: 50%;
   height: 90%;
-  border-right: 1px solid #ccc;
   float: left;
   box-sizing: border-box;
   display: inline-block;
+  padding: 10px 10px 0 10px;
+  font-size: 16px;
+  border: 0;
+  outline: 0;
 }
 .edit-hidden {
   display: none;
 }
 
-.edit-area {
-  box-sizing: border-box;
-  width: 100%;
+.markdown {
   height: 100%;
-  padding: 20px;
-  font-size: 16px;
+  padding: 5px 10px;
+}
+
+.markdown-show {
+  display: block;
+}
+.markdown-hidden {
+  display: none;
+}
+
+.markdown-title {
   border: 0;
+  width: 98%;
+  margin-bottom: 10px;
+  margin: 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
   outline: 0;
 }
+
+.compile {
+  display: inline-block;
+  height: 88%;
+  overflow-y: auto;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
 

@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 
-//style
 import styles from './Compile.css'
-import 'github-markdown-css'
 // api
 import marked from 'marked'
 
@@ -16,17 +14,10 @@ export default class Compile extends Component {
   }
 
   render() {
-    let style
-    if(this.props.edit) {
-      // 如果是编辑状态
-      style = styles['compile-half']
-    }else {
-      style = styles['compile-all']
-    }
     let html = this.compileMarkdown(this.props.html)
     return (
-      <div 
-        className={style}
+      <div
+        className = {styles['compile-half']}
       >
         <div
           className={styles['compile-inner'] + ' markdown-body'}

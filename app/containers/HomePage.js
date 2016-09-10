@@ -20,17 +20,7 @@ class HomePage extends Component {
     return (
       <div className={styles.container}>
         <Menu 
-          onAddClick = {
-            (title, content)=> {
-              // 广播新建笔记
-              let note = increment(title, content)
-              console.log(note)
-              const id = note.id
-              dispatch(note)
-              // 应该还要设置“当前笔记”
-              dispatch(chooseNote(id))
-            }
-          }
+          
         />
         <div className={styles.aside}>
           <Note
@@ -38,6 +28,10 @@ class HomePage extends Component {
             onClick={(id)=> {
               // 选择其他笔记前，先保存当前正在编辑的
               // 最好还是提示一下，还未保存，那就还要判断用户是否改变了，就是 input 是否发生
+              if(currentNote.id === '') {
+                dispatch(chooseNote(id))
+                return
+              }
               let index = indexOf(notes, currentNote.id)
               if(notes[index].title === currentNote.title && notes[index].content === currentNote.content) {
                 // 如果两个相等，就是没做任何修改
@@ -55,7 +49,7 @@ class HomePage extends Component {
             }}
           />
         </div>
-        <div className={styles['markdown']}>
+        <div className={styles['content']}>
           <Edit
             currentNote = {currentNote}
           />

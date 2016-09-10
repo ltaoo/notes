@@ -45,18 +45,21 @@ export function indexOf(notes, id) {
 }
 
 // 计算笔记名是否重复，并返回计算后的不重复笔记名
-export function isExist(notes, name) {
+export function isExist(notes, name, id) {
   let i = 1
 
   let noteAry = []
   notes.forEach(obj=> {
-    for(let key in obj) {
-      if(key === 'title') {
-        // 如果是 title
-        noteAry.push(obj[key])
-      }
+    // 如果不传 id ，表示这是新增笔记
+    if(!id) {
+      noteAry.push(obj.title)
+    }
+    // 如果是 title，这里是获取每一篇笔记的 title，返回到 noteAry 数组中。
+    else if(id && obj.id !== id) {
+      noteAry.push(obj.title)
     }
   })
+  console.log(noteAry)
   //let notes = getNotes()
   let lastName = ''
   function addNum(name) {

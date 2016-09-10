@@ -13,6 +13,7 @@
   padding-top: 10px;
   padding-left: 20px;
   box-sizing: border-box;
+  border-left: 1px solid #ccc;
 }
 .compile-all {
   width: 98%;

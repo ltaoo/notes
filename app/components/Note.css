@@ -1,6 +1,5 @@
 .notes {
   height: 50%;
-  overflow-y: scroll;
   position: relative;
 }
 .notes-head {
@@ -9,12 +8,21 @@
   background: #eee;
   line-height: 40px;
   border-bottom: 1px solid #ccc;
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
 }
 .notes-small {
   position: absolute;
   right: 10px;
   top: 10px;
   font-size: 14px;
+}
+.notes-content {
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y: scroll;
+  padding-top: 40px;
 }
 .notes-item {
   font-size: 14px;
@@ -24,4 +32,14 @@
   border-bottom: 1px solid #eee;
 
   line-height: 30px;
+}
+.notes-item-active {
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px 10px;
+
+  border-bottom: 1px solid #eee;
+
+  line-height: 30px;
+  background-color: #eee;
 }

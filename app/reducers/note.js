@@ -1,4 +1,4 @@
-import { increment_note, decrement_note, choose_note, input_title, save_note } from '../actions/note';
+import { increment_note, decrement_note, choose_note, input_title, input_content, save_note, delete_note } from '../actions/note';
 import { indexOf, isExist } from '../utils/utils'
 
 const initialState = {
@@ -14,14 +14,14 @@ export default function note(state = initialState, action) {
     case increment_note:
       return Object.assign({}, state, {
         notes: [
-          ...state.notes,
           {
             id: action.id,
             title: action.title,
             content: action.content,
             createTime: action.createTime,
             todo: action.todo
-          }
+          },
+          ...state.notes
         ]
       })
     case choose_note:// 新增笔记后，选中该笔记
@@ -41,10 +41,16 @@ export default function note(state = initialState, action) {
           title: action.title
         })
       })
+    case input_content:
+      return Object.assign({}, state, {
+        currentNote: Object.assign({}, state.currentNote, {
+          content: action.content
+        })
+      })
     case save_note:
       let index2 = indexOf(state.notes, state.currentNote.id)
       // 虽然说不要在这里修改传过来的值，但是有时候还是需要啊！！在 action 中可以获取到 state 吗？
-      const title = isExist(state.notes, state.currentNote.title)
+      const title = isExist(state.notes, state.currentNote.title, state.currentNote.id)
 
       return Object.assign({}, state, {
         notes: [
@@ -57,6 +63,19 @@ export default function note(state = initialState, action) {
         ],
         currentNote: Object.assign({}, state.currentNote, {
           title
+        })
+      })
+    case delete_note:
+      const index3 = indexOf(state.notes, state.currentNote.id)
+      return Object.assign({}, state, {
+        notes: [
+          ...state.notes.slice(0, index3),
+          ...state.notes.slice(index3 + 1)
+        ],
+        currentNote: Object.assign({}, state.currentNote, {
+          id: '',
+          title: '',
+          content: ''
         })
       })
     default:
