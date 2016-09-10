@@ -1,55 +1,36 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import styles from './Menu.css'
 
-export default class Menu extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      text: '保存'
-    }
-    this.newFile.bind(this)
-    this.saveFile.bind(this)
-  }
-  newFile() {
-    console.log('create new file')
-    this.props.create()
-  }
-  saveFile() {
-    console.log('save file')
-    if(this.state.text === '编辑') {
-      console.log('编辑笔记')
-      this.props.edit()
-      this.setState({
-        text: '保存'
-      })
-    }else {
-      console.log('保存笔记')
-      this.props.save()
-      this.setState({
-        text: '编辑'
-      })
-    }
-  }
+import { isExist } from '../utils/utils'
+
+class Menu extends Component {
   render() {
-    let btnText = ''
-    if(this.props.editState) {
-      // 如果是编辑状态
-      btnText = '保存'
-    }else {
-      btnText = '编辑'
-    }
     return (
       <div className={styles['menu']}>
         <button
           className={styles['btn']}
-          onClick={this.newFile.bind(this)}
-        >新建</button>
-        <button
-          className={styles['btn']}
-          onClick={this.saveFile.bind(this)}
-        >{btnText}</button>
+          onClick={e=> this.handleClick(e)}
+        >新增笔记</button>
       </div>
     )
   }
+
+  handleClick(e) {
+    const { dispatch, notes } = this.props
+    // 这里应该要从 notes 中查询是否有同名笔记，如果有，就做处理
+    let name = isExist(notes, '未命名')
+    this.props.onAddClick(name, '')
+  }
 }
+
+
+// 在这里计算显示的笔记
+function select(state) {
+  return {
+    notes: state.note.notes
+  }
+}
+
+export default connect(select)(Menu)

@@ -1,0 +1,33 @@
+.container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.aside {
+  height: 100%;
+  width: 300px;
+
+  float: left;
+}
+.markdown {
+  margin-left: 300px;
+  height: 100%;
+}
+.markdown-show {
+  display: block;
+}
+.markdown-hidden {
+  display: none;
+}
+.markdown-title {
+  border: 0;
+  width: 98%;
+  margin-bottom: 10px;
+  padding: 5px;
+  margin: 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  outline: 0;
+}
