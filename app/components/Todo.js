@@ -5,6 +5,13 @@ import styles from './Todo.css'
 export default class Todo extends Component {
   render() {
     let todos = this.props.todos
+    // 遍历 todo 计算出未完成的数量
+    let num = todos.length
+    todos.forEach(todo=> {
+      if(todo.complete) {
+        num -= 1
+      }
+    })
     let list = []
     todos.forEach(note=> {
       let cln = note.complete ? styles['todo-complete'] : styles['todo-item']
@@ -26,7 +33,7 @@ export default class Todo extends Component {
     let noteLen = todos.length
     return (
       <div className={styles['todo']}>
-        <h3 className={styles['todo-head']}>待复习笔记</h3><span className={styles['todo-small']}>/{noteLen}条</span>
+        <h3 className={styles['todo-head']}>待复习笔记</h3><span className={styles['todo-small']}>{num}/{noteLen}条</span>
         <ul className={styles['todo-list']}>
           {list}
         </ul>

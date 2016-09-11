@@ -93,13 +93,31 @@ export function getTodos() {
         todo.push({
           id: note.id,
           title: note.title,
-          content: note.content,
           complete: false
         })
       }
     }
   })
   return todo
+}
+
+// 根据 id 完成复习
+export function review(id) {
+  let now = new Date()
+  let json = getDb()
+  json.notes.forEach(note=> {
+    if(note.id === id) {
+      // 该篇笔记完成复习
+      for(let time in note.todo) {
+        if(new Date(time) <= now) {
+          note.todo[time] = true
+        }
+      }
+    }
+  })
+  // 写入db.json
+  let str = JSON.stringify(json)
+  fs.writeFileSync(db, str, 'utf8')
 }
 
 // 完成指定笔记的复习

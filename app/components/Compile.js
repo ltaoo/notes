@@ -17,7 +17,7 @@ export default class Compile extends Component {
     let html = this.compileMarkdown(this.props.html)
     return (
       <div
-        className = {styles['compile-half']}
+        className = {this.props.className}
       >
         <div
           className={styles['compile-inner'] + ' markdown-body'}

@@ -12,5 +12,5 @@
 }
 .content {
   margin-left: 250px;
-  height: 100%;
+  height: calc(100% - 60px);
 }

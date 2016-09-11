@@ -5,7 +5,7 @@ import {
 // reducer
 import * as fromNote from './note'
 // file
-import { getTodos } from '../utils/fileUtil'
+import { getTodos, review } from '../utils/fileUtil'
 // util
 import { indexOf } from '../utils/utils'
 let todoAry = getTodos()
@@ -19,6 +19,7 @@ export default function todo(state = initialState, action) {
     case complete_todo:
       // 示例中是传入了 index，然后分割数组
       let index = indexOf(state, action.id)
+      review(action.id)
       return [
         ...state.slice(0, index),
         Object.assign({}, state[index], {

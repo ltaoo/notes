@@ -1,11 +1,11 @@
 /* edit column */
 .edit {
   width: 50%;
-  height: 90%;
+  height: 95%;
   float: left;
   box-sizing: border-box;
   display: inline-block;
-  padding: 10px 10px 0 10px;
+  padding: 10px 10px 20px 10px;
   font-size: 16px;
   border: 0;
   outline: 0;
@@ -16,7 +16,8 @@
 
 .markdown {
   height: 100%;
-  padding: 5px 10px;
+  padding: 5px 10px 20px 10px;
+  box-sizing: border-box;
 }
 
 .markdown-show {
@@ -39,10 +40,33 @@
 
 .compile {
   display: inline-block;
+  height: 92%;
+  overflow-y: auto;
+  padding-left: 0 10px 20px 10px;
+  box-sizing: border-box;
+}
+.compile-half {
+  width: 50%;
+  display: inline-block;
+  height: 92%;
+  overflow-y: auto;
+  padding-top: 10px;
+  padding-left: 20px;
+  box-sizing: border-box;
+  border-left: 1px solid #ccc;
+}
+.compile-all {
+  width: 98%;
+  display: inline-block;
   height: 88%;
   overflow-y: auto;
-  padding-left: 10px;
+  padding-top: 10px;
+  padding-left: 20px;
   box-sizing: border-box;
+}
+
+.compile-inner {
+  width: 100%;
 }
 
 

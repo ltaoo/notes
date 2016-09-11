@@ -5,7 +5,9 @@ import {
   input_title, 
   input_content, 
   save_note, 
-  delete_note 
+  delete_note,
+  edit_note,
+  read_note
 } from '../actions/note';
 
 import { indexOf, isExist } from '../utils/utils'
@@ -20,7 +22,9 @@ const initialState = {
   currentNote: {
     id: '',
     title: '',
-    content: ''
+    content: '',
+    // 增加一个视图状态，表示默认是阅读状态
+    isEdit: false
   }
 }
 export default function note(state = initialState, action) {
@@ -48,7 +52,8 @@ export default function note(state = initialState, action) {
         currentNote: Object.assign({}, state.currentNote, {
           id: action.id,
           title: state.notes[index].title,
-          content: state.notes[index].content
+          content: state.notes[index].content,
+          isEdit: false
         })
       })
     case input_title:
@@ -85,7 +90,7 @@ export default function note(state = initialState, action) {
       writeDb(afterSave)
       return afterSave
     case delete_note:
-      const index3 = indexOf(state.notes, state.currentNote.id)
+      const index3 = indexOf(state.notes, action.id)
       let afterDel = Object.assign({}, state, {
         notes: [
           ...state.notes.slice(0, index3),
@@ -99,6 +104,18 @@ export default function note(state = initialState, action) {
       })
       writeDb(afterDel)
       return afterDel
+    case edit_note:
+      return Object.assign({}, state, {
+        currentNote: Object.assign({}, state.currentNote, {
+          isEdit: true
+        })
+      })
+    case read_note:
+      return Object.assign({}, state, {
+        currentNote: Object.assign({}, state.currentNote, {
+          isEdit: false
+        })
+      })
     default:
       return state;
   }

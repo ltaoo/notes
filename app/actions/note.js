@@ -15,6 +15,10 @@ export const input_content = 'input_content'
 export const save_note = 'save_note'
 // 删除笔记
 export const delete_note = 'delete_note'
+// 改变状态为编辑状态
+export const edit_note = 'edit_note'
+// 改变状态为阅读状态
+export const read_note = 'read_note'
 
 export function increment(title) {
   const now = new Date().getTime()
@@ -72,14 +76,26 @@ export function inputContent(id, content) {
 // 这样，可以比对笔记名是否重复。
 export function saveNote() {
   // 在保存笔记前对笔记名做判断？
-
   return {
     type: save_note
   }
 }
 
-export function deleteNote() {
+export function deleteNote(id) {
   return {
-    type: delete_note
+    type: delete_note,
+    id
+  }
+}
+
+export function editNote() {
+  return {
+    type: edit_note
+  }
+}
+
+export function readNote() {
+  return {
+    type: read_note
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { increment, chooseNote, saveNote } from '../actions/note'
+import { increment, chooseNote, saveNote, editNote } from '../actions/note'
 
 import styles from './Menu.css'
 
@@ -52,6 +52,7 @@ class Menu extends Component {
       dispatch(note)
       // 应该还要设置“当前笔记”
       dispatch(chooseNote(id))
+      dispatch(editNote())
     }
   }
 }
