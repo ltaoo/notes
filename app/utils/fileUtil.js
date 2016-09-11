@@ -3,10 +3,16 @@ import fs from 'fs'
 // config 暂时硬编码，后面考虑增加配置文件
 let dir = './data/'
 let db = 'db.json'
-export function getDb() {
-  return JSON.parse(fs.readFileSync(db, 'utf-8'))
+export function getDb(cb) {
+  // 在这里判断是否存在 db 文件，不存在则创建
+  let data = null
+  if(fs.existsSync(db)) {
+    data = JSON.parse(fs.readFileSync(db, 'utf-8'))
+  }else {
+    data = JSON.parse(fs.writeFileSync('db.json', '{"notes": []}', 'utf8'))
+  }
+  return data
 }
-
 
 // 获取笔记列表
 export function getNotes() {
@@ -18,41 +24,10 @@ export function getNote(name) {
   return fs.readFileSync(dir+name+'.md', 'utf8')
 }
 
-// 增加新笔记
-export function addNote(name, value, cb) {
-  let now = new Date().toLocaleDateString()
-  let temp = new Date().getTime() 
-  let afterOne = new Date(temp+86400000*1).toLocaleDateString()
-  let afterTwo = new Date(temp+86400000*3).toLocaleDateString()
-  let afterThree = new Date(temp+86400000*7).toLocaleDateString()
-  let afterFour = new Date(temp+86400000*15).toLocaleDateString()
-  let afterFive = new Date(temp+86400000*30).toLocaleDateString()
-  console.log(afterOne, afterTwo, afterThree, afterFour, afterFive)
-  fs.writeFile(dir+name+'.md', value, (err)=> {
-    if(err) throw err
-    // 写入db.json
-    let json = getDb()
-    // 根据遗忘曲线来先写好要复习的时间
-    json.notes.unshift({
-      title: name,
-      createTime: now,
-      updateTime: [],
-      todo: {
-        [afterOne]: false,
-        [afterTwo]: false,
-        [afterThree]: false,
-        [afterFour]: false,
-        [afterFive]: false
-      }
-    })
-    let notes = json.notes
-    // 直接覆盖
-    let str = JSON.stringify(json)
-    fs.writeFile(db, str, (err)=> {
-      if(err) throw err
-      cb(notes)
-    })
-  })
+// 覆写 db.json
+export function writeDb(value, cb) {
+  let str = JSON.stringify(value)
+  fs.writeFileSync(db, str, 'utf8')
 }
 // 修改笔记
 export function updateNote(name, value, cb) {

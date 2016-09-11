@@ -1,8 +1,13 @@
 import { increment_note, decrement_note, choose_note, input_title, input_content, save_note, delete_note } from '../actions/note';
 import { indexOf, isExist } from '../utils/utils'
 
+// api
+import { getNotes, writeDb } from '../utils/fileUtil'
+
+// 应该在这里获取到初始数据吧？
+
 const initialState = {
-  notes: [],
+  notes: getNotes(),
   currentNote: {
     id: '',
     title: '',
@@ -11,8 +16,9 @@ const initialState = {
 }
 export default function note(state = initialState, action) {
   switch (action.type) {
+    // 新增笔记
     case increment_note:
-      return Object.assign({}, state, {
+      let afterIncre = Object.assign({}, state, {
         notes: [
           {
             id: action.id,
@@ -24,6 +30,8 @@ export default function note(state = initialState, action) {
           ...state.notes
         ]
       })
+      writeDb(afterIncre)
+      return afterIncre
     case choose_note:// 新增笔记后，选中该笔记
       // 首先要明确一点，这里是接收 action，就是别人告诉这里，要做什么，具体怎么做，由这里决定
       let index = indexOf(state.notes, action.id)
@@ -52,7 +60,7 @@ export default function note(state = initialState, action) {
       // 虽然说不要在这里修改传过来的值，但是有时候还是需要啊！！在 action 中可以获取到 state 吗？
       const title = isExist(state.notes, state.currentNote.title, state.currentNote.id)
 
-      return Object.assign({}, state, {
+      let afterSave = Object.assign({}, state, {
         notes: [
           ...state.notes.slice(0, index2),
           Object.assign({}, state.notes[index2], {
@@ -65,6 +73,8 @@ export default function note(state = initialState, action) {
           title
         })
       })
+      writeDb(afterSave)
+      return afterSave
     case delete_note:
       const index3 = indexOf(state.notes, state.currentNote.id)
       return Object.assign({}, state, {

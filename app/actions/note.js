@@ -1,4 +1,6 @@
 // 首先定义 action
+// 初始化笔记列表
+export const fetch_notes = 'fetch_notes'
 // 增加笔记
 export const increment_note = 'increment_note'
 // 删除笔记
@@ -13,7 +15,6 @@ export const input_content = 'input_content'
 export const save_note = 'save_note'
 // 删除笔记
 export const delete_note = 'delete_note'
-
 
 export function increment(title) {
   const now = new Date().getTime()

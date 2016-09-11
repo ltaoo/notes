@@ -6,8 +6,7 @@ import styles from './Note.css'
 
 class Note extends Component {
   render() {
-    const { currentNote } = this.props
-    let notes = this.props.notes
+    const {notes, currentNote } = this.props
     // 高亮
 
     let list = []

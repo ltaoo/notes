@@ -5,40 +5,6 @@ import styles from './Todo.css'
 import { getNote, reviewOver } from '../utils/fileUtil'
 
 export default class Todo extends Component {
-  constructor(props) {
-    super(props)
-    let todos = this.props.todos
-    this.state = {
-      clickNote: '',
-      todos: todos,
-      cTodos: [],
-      index: -1
-    }
-  }
-  fetchItem(name) {
-    // 如果点击同名笔记，直接return，不用再次去读取笔记
-    if(this.state.clickNote === name) {
-      return
-    }
-    this.setState({
-      clickNote: name
-    })
-    let fileContent = getNote(name)
-    // 获取到了内容，通知父组件
-    this.props.onClick(fileContent, name)
-  }
-  reviewComplete(index, note, event) {
-    event.stopPropagation()
-    let ary = this.state.cTodos
-    ary.push(note)
-    this.setState({
-      cTodos: ary
-    })
-    // 更新db.json
-    reviewOver(note, ()=> {
-      console.log('复习完成')
-    })
-  }
   render() {
     let todos = this.state.todos
     let list = []
