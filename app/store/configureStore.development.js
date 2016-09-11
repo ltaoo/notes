@@ -5,10 +5,12 @@ import { hashHistory } from 'react-router';
 import { routerMiddleware, push } from 'react-router-redux';
 import rootReducer from '../reducers';
 
-import * as counterActions from '../actions/note';
+import * as noteActions from '../actions/note';
+import * as todoActions from '../actions/todo'
 
 const actionCreators = {
-  ...counterActions,
+  ...noteActions,
+  ...todoActions,
   push,
 };
 

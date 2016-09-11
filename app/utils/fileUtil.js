@@ -9,7 +9,8 @@ export function getDb(cb) {
   if(fs.existsSync(db)) {
     data = JSON.parse(fs.readFileSync(db, 'utf-8'))
   }else {
-    data = JSON.parse(fs.writeFileSync('db.json', '{"notes": []}', 'utf8'))
+    fs.writeFileSync('db.json', '{"notes": []}', 'utf8')
+    data = JSON.parse(fs.readFileSync(db, 'utf-8'))
   }
   return data
 }
@@ -78,19 +79,23 @@ export function searchNote(name) {
 // 根据时间计算出应该要复习的笔记
 export function getTodos() {
   let todo = []
-  let now = new Date().toLocaleDateString()
+  let idAry = []
   let notes = getNotes()
   // notes 是数组
   notes.forEach(note=> {
     for(let key in note.todo) {
       // key 是时间
-      if(key <= now && !note.todo[key]) {
+      if(new Date(key) <= new Date() && !note.todo[key] && !inArray(idAry, note.id)) {
         // 就是要复习的
         // 先判断笔记是否已经存在 todo 数组里
-        if(!inArray(todo, note.title)) {
-          // 如果不存在，才添加到数组中
-          todo.push(note.title)
-        }
+        // 如果不存在，才添加到数组中
+        idAry.push(note.id)
+        todo.push({
+          id: note.id,
+          title: note.title,
+          content: note.content,
+          complete: false
+        })
       }
     }
   })

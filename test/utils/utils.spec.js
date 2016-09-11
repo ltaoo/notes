@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { isExist } from '../../app/utils/utils.js'
+import { isExist, inArray } from '../../app/utils/utils.js'
 
 const notes = [
   {
@@ -11,9 +11,15 @@ const notes = [
   }
 ]
 
+const notes2 = [{title: 'hello', content: 'world'}]
+
 describe('根据名称与id计算名称的测试', function () {
   it('应该返回 未命名', function () {
     expect(isExist(notes, '未命名', 1)).to.be.equal('未命名')
+  })
+
+  it('测试 inArray 函数', function () {
+    expect(inArray(notes2, {title: 'hello'})).to.be.equal(true)
   })
 })
 

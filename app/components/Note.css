@@ -1,11 +1,11 @@
 .notes {
-  height: 50%;
+  height: 52%;
   position: relative;
 }
 .notes-head {
   font-size: 16px;
   padding-left: 10px;
-  background: #eee;
+  background: #f7f7f7;
   line-height: 40px;
   border-bottom: 1px solid #ccc;
   position: absolute;

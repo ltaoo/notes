@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 // actions
 import { increment, chooseNote, saveNote } from '../actions/note'
+import { complete, view } from '../actions/todo'
 // utils
 import { indexOf } from '../utils/utils'
 // style
@@ -16,7 +17,7 @@ import Compile from '../components/Compile'
 class HomePage extends Component {
   render() {
     // 调用 connect() 才能获取到 dispatch 以及 note
-    const { dispatch, notes, currentNote } = this.props
+    const { dispatch, notes, todos, currentNote } = this.props
     return (
       <div className={styles.container}>
         <Menu 
@@ -48,6 +49,15 @@ class HomePage extends Component {
               }
             }}
           />
+          <Todo
+            todos = {todos}
+            onComplete = {id=> 
+              dispatch(complete(id))
+            }
+            onView = {id=>
+              dispatch(chooseNote(id))
+            }
+          />
         </div>
         <div className={styles['content']}>
           <Edit
@@ -63,6 +73,7 @@ function select(state) {
   //console.log(state)// 这里打印出了两个属性，是合并两个 reduce 时的名字，所以这里有一个 note 和一个 routing
   return {
     notes: state.note.notes,
+    todos: state.todo,
     currentNote: state.note.currentNote
   }
 }

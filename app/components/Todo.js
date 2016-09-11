@@ -1,34 +1,33 @@
 import React, { Component } from 'react'
 
 import styles from './Todo.css'
-// api
-import { getNote, reviewOver } from '../utils/fileUtil'
 
 export default class Todo extends Component {
   render() {
-    let todos = this.state.todos
+    let todos = this.props.todos
     let list = []
-    let i = 0
-    let leftItem = todos.length - this.state.cTodos.length
     todos.forEach(note=> {
-      let cln = inArray(this.state.cTodos, note) ? styles['todo-complete'] : styles['todo-item']
-      list.push((<li key={i} 
-        onClick = {this.fetchItem.bind(this, note)}
-        className={cln}
+      let cln = note.complete ? styles['todo-complete'] : styles['todo-item']
+      list.push((<li 
+          key={note.id} 
+          className={cln}
+          onClick = {()=> this.props.onView(note.id)}
         >
           <div 
             className={styles['todo-btn']}
-            onClick={this.reviewComplete.bind(this, i, note)}
+            onClick = {(e)=> {
+              e.stopPropagation()
+              this.props.onComplete(note.id)
+            }}
           ></div>
-          {note}
+          {note.title}
         </li>))
-      i = i + 1
     })
     let noteLen = todos.length
     return (
       <div className={styles['todo']}>
-        <h3 className={styles['todo-head']}>待复习笔记</h3><span className={styles['todo-small']}>{leftItem}/{noteLen}条</span>
-        <ul>
+        <h3 className={styles['todo-head']}>待复习笔记</h3><span className={styles['todo-small']}>/{noteLen}条</span>
+        <ul className={styles['todo-list']}>
           {list}
         </ul>
       </div>

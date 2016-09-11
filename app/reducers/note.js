@@ -1,4 +1,13 @@
-import { increment_note, decrement_note, choose_note, input_title, input_content, save_note, delete_note } from '../actions/note';
+import { 
+  increment_note, 
+  decrement_note, 
+  choose_note, 
+  input_title, 
+  input_content, 
+  save_note, 
+  delete_note 
+} from '../actions/note';
+
 import { indexOf, isExist } from '../utils/utils'
 
 // api
@@ -77,7 +86,7 @@ export default function note(state = initialState, action) {
       return afterSave
     case delete_note:
       const index3 = indexOf(state.notes, state.currentNote.id)
-      return Object.assign({}, state, {
+      let afterDel = Object.assign({}, state, {
         notes: [
           ...state.notes.slice(0, index3),
           ...state.notes.slice(index3 + 1)
@@ -88,6 +97,8 @@ export default function note(state = initialState, action) {
           content: ''
         })
       })
+      writeDb(afterDel)
+      return afterDel
     default:
       return state;
   }

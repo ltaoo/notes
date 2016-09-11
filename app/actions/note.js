@@ -21,7 +21,7 @@ export function increment(title) {
   const dayAry = [1, 3, 7, 15, 30]
   const ary = []
   dayAry.forEach(day=> {
-    ary.push(new Date(now + 86400000*day).toLocaleString())
+    ary.push(new Date(now + 86400000*day).toISOString())
   })
   const todo = {}
   ary.forEach(date=> {
@@ -31,7 +31,7 @@ export function increment(title) {
     type: increment_note,
     title,
     content: '',
-    createTime: new Date().toLocaleString(),
+    createTime: new Date().toISOString(),
     todo: todo,
     id: new Date().getTime()
   }
